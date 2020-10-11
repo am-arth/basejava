@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Console;
 
 /**
  * Interactive test for ArrayStorage implementation
@@ -25,7 +26,10 @@ public class MainArray {
             }
             switch (params[0]) {
                 case "list":
-                    printAll();
+                   // printAll();
+                        for (int i = 0; i < ARRAY_STORAGE.storage.length; i++) {
+                         System.out.println(ARRAY_STORAGE.storage[i]);
+                    }
                     break;
                 case "size":
                     System.out.println(ARRAY_STORAGE.size());
