@@ -18,9 +18,6 @@ public class ArrayStorage {
             for (int i = 0; i < size; i++) {
                 if (storage[i].uuid.equals(r.uuid)) {
                     index = i;
-                    if (index > -1) {
-                        break;
-                    }
                 }
             }
         }
@@ -33,28 +30,25 @@ public class ArrayStorage {
                 }
             }
         }
-     }
+    }
 
     Object get(String uuid) {
         int index = -1;
-            for (int i = 0; i < size; i++) {
-                if (storage[i].uuid.equals(uuid)) {
-                    index = i;
-                    if (index > -1) {
-                        return storage[index];
-                    }
-                }
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(uuid)) {
+                index = i;
+                    return storage[index];
             }
+        }
         return null;
     }
 
     void delete(String uuid) {
 
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid == uuid) {
+             if (storage[i].uuid.equals (uuid)) {
                 storage[i] = null;
                 size--;
-                System.out.println(size);
                 break;
             }
         }
@@ -86,3 +80,4 @@ public class ArrayStorage {
         return 0;
     }
 }
+
