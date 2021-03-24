@@ -20,25 +20,39 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid == storage[i].getUuid()) {
-                return storage[i];
-            }
+        if (getIndexArray(uuid) == -1) {
+            return null;
+        } else {
+            return storage[getIndexArray(uuid)];
         }
-        return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid == storage[i].getUuid()) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-                break;
-            }
+        if (getIndexArray(uuid) == -1) {
+            System.out.println("Данный uuid не найден!");
+        } else {
+            storage[getIndexArray(uuid)] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
+    public void update(Resume r) {
+        if (getIndexArray(r.getUuid()) == -1) {
+            System.out.println("Данный uuid не найден!");
+        } else {
+            storage[getIndexArray(r.getUuid())] = r;
+        }
+    }
+
+    public int getIndexArray(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid == storage[i].getUuid()) {
+                return i;
+            }
+        }
+        return -1;
+    }
     /**
      * @return array, contains only Resumes in storage (without null)
      */
