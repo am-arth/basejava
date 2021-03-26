@@ -1,6 +1,4 @@
 package com.lesson1;
-import com.lesson1.Resume;
-import com.lesson1.ArrayStorage;
 /**
  * Test for your ArrayStorage implementation
  */

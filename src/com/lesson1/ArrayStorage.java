@@ -1,5 +1,5 @@
 package com.lesson1;
-import com.lesson1.Resume;
+import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
@@ -8,44 +8,53 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void save(Resume r) {
-        storage[size] = r;
-        size++;
+        int index = getIndexArray(r.getUuid());
+        if (size == storage.length) {
+            System.out.println("Выход за пределы допустимого диапазона!");
+        } else if (index != -1) {
+            System.out.println("Данный " + r.getUuid() + " не найден!");
+        } else {
+            storage[size] = r;
+            size++;
+        }
     }
 
     public Resume get(String uuid) {
-        if (getIndexArray(uuid) == -1) {
+        int index = getIndexArray(uuid);
+        if (index == -1) {
+            System.out.println("Данный " + uuid + " не найден!");
             return null;
         } else {
-            return storage[getIndexArray(uuid)];
+            return storage[index];
         }
     }
 
     public void delete(String uuid) {
-        if (getIndexArray(uuid) == -1) {
-            System.out.println("Данный uuid не найден!");
+        int index = getIndexArray(uuid);
+        if (index == -1) {
+            System.out.println("Данный " + uuid + " не найден!");
         } else {
-            storage[getIndexArray(uuid)] = storage[size - 1];
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         }
     }
 
     public void update(Resume r) {
-        if (getIndexArray(r.getUuid()) == -1) {
-            System.out.println("Данный uuid не найден!");
+        int index = getIndexArray(r.getUuid());
+        if (index == -1) {
+            System.out.println("Данный " + r.getUuid() + " не найден!");
         } else {
-            storage[getIndexArray(r.getUuid())] = r;
+            storage[index] = r;
         }
     }
 
-    public int getIndexArray(String uuid) {
+    private int getIndexArray(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid == storage[i].getUuid()) {
                 return i;
@@ -58,9 +67,7 @@ public class ArrayStorage {
      */
     public Resume[] getAll() {
         Resume[] result = new Resume[size];
-    	for (int i = 0; i < size; i++) {
-         result[i] = storage[i];
-        }        
+        result = Arrays.copyOfRange(storage, 0, size);
 	    return result;
     }
 
