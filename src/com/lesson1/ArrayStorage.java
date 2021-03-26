@@ -17,7 +17,7 @@ public class ArrayStorage {
         if (size == storage.length) {
             System.out.println("Выход за пределы допустимого диапазона!");
         } else if (index != -1) {
-            System.out.println("Данный " + r.getUuid() + " не найден!");
+            System.out.println("Данный " + r.getUuid() + " уже существует!");
         } else {
             storage[size] = r;
             size++;
