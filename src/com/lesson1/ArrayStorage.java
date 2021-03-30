@@ -1,5 +1,7 @@
 package com.lesson1;
+
 import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
@@ -29,7 +31,7 @@ public class ArrayStorage {
             System.out.println("Данный " + uuid + " не найден!");
             return null;
         }
-            return storage[index];
+        return storage[index];
     }
 
     public void delete(String uuid) {
@@ -60,11 +62,11 @@ public class ArrayStorage {
         }
         return -1;
     }
+
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] result = new Resume[size];
         return Arrays.copyOfRange(storage, 0, size);
     }
 
