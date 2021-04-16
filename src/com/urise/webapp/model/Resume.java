@@ -2,9 +2,6 @@ package com.urise.webapp.model;
 
 import java.util.Objects;
 
-/**
- * ru.javawebinar.basejava.model.Resume class
- */
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
