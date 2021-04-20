@@ -22,8 +22,8 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = getIndex(resume.getUuid());
         if (size >= STORAGE_LIMIT) {
             System.out.println("Массив storage заполнен, сохранить невозможно!");
-        } else if (index > -1) {
-            System.out.println("Данный " + resume.getUuid() + " уже существует!");
+        } else if (index >= 0) {
+            System.out.println("Резюме " + resume.getUuid() + " уже существует!");
         } else {
             addResume(resume, index);
             size++;
@@ -33,17 +33,18 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Данный " + uuid + " не найден!");
+            System.out.println("Резюме " + uuid + " не найден!");
         } else {
-            deletedResume(index);
+            deleteResume(index);
+            storage[size - 1] = null;
             size--;
         }
     }
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index == -1) {
-            System.out.println("Данный " + resume.getUuid() + " не найден!");
+        if (index < 0) {
+            System.out.println("Резюме " + resume.getUuid() + " не найден!");
         } else {
             storage[index] = resume;
         }
@@ -51,8 +52,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
-            System.out.println("Данный " + uuid + " не найден");
+        if (index < 0) {
+            System.out.println("Резюме " + uuid + " не найден");
             return null;
         }
         return storage[index];
@@ -62,7 +63,7 @@ public abstract class AbstractArrayStorage implements Storage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOf(storage,size);
     }
 
     public int size() {
@@ -73,6 +74,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void addResume(Resume resume, int index);
 
-    protected abstract void deletedResume(int index);
+    protected abstract void deleteResume(int index);
 
 }
