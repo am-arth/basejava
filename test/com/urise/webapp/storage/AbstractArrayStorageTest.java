@@ -98,9 +98,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertEquals(RESUME1, storage.get(RESUME1.getUuid()));
-        assertEquals(RESUME2, storage.get(RESUME2.getUuid()));
-        assertEquals(RESUME3, storage.get(RESUME3.getUuid()));
+        assertEquals(RESUME1, storage.get(UUID1));
+        assertEquals(RESUME2, storage.get(UUID2));
+        assertEquals(RESUME3, storage.get(UUID3));
     }
 
     @Test
