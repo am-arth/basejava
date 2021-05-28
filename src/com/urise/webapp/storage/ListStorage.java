@@ -4,53 +4,54 @@ import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ListStorage extends AbstractStorage {
 
-    private List<Resume> storage = new ArrayList<>();
+    private List<Resume> List = new ArrayList<>();
 
     public void clear() {
-        storage.clear();
+        List.clear();
     }
 
     public int size() {
-        return storage.size();
+        return List.size();
     }
 
     public Resume[] getAll() {
-        Resume[] resumes = new Resume[storage.size()];
-        return storage.toArray(resumes);
+        return List.toArray(new Resume[List.size()]);
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        for (Resume resume : storage) {
-            if (Objects.equals(resume.getUuid(), uuid)) {
-                return storage.indexOf(resume);
+    protected int getKey(String uuid) {
+        for (int i = 0; i < List.size(); i++) {
+            if (List.get(i).getUuid().equals(uuid)) {
+                return i;
             }
         }
         return -1;
     }
 
     @Override
-    protected void addResumeStorage(int index, Resume resume) {
-        storage.add(resume);
+    protected void updateResume(Resume resume, Object sKey) {
+        List.set((Integer) sKey, resume);
+    }
+    @Override
+    protected void deleteResume(Object sKey) {
+        List.remove((Integer) sKey);
     }
 
     @Override
-    protected void deleteResumeStorage(int index) {
-        storage.remove(index);
+    protected Resume getResume(Object sKey) {
+        return List.get((Integer) sKey);
     }
 
     @Override
-    protected void updateResumeStorage(int index, Resume resume) {
-        storage.set(index, resume);
+    protected void saveResume(Resume resume, Object sKey) {
+        List.set((Integer) sKey, resume);
     }
 
     @Override
-    protected Resume getResumeStorage(int index) {
-        return storage.get(index);
+    protected boolean isExistKey(Object sKey) {
+        return (Integer) sKey >= 0;
     }
-
 }
