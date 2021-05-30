@@ -20,30 +20,30 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveResume(Resume resume, Object sKey) {
+    protected void saveResume(Resume resume, Object index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Массив storage заполнен, сохранить невозможно!", resume.getUuid());
         } else {
-            addResume(resume, (Integer) sKey);
+            addResumeStorage(resume, (Integer) index);
             size++;
         }
     }
 
     @Override
-    protected void deleteResume(Object sKey) {
-        deleteResumeStorage((Integer) sKey);
+    protected void deleteResume(Object index) {
+        deleteResumeStorage((Integer) index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected void updateResume(Resume resume, Object sKey) {
-        storage[(Integer) sKey] = resume;
+    protected void updateResume(Resume resume, Object index) {
+        storage[(Integer) index] = resume;
     }
 
     @Override
-    public Resume getResume(Object sKey) {
-        return storage[(Integer) sKey];
+    public Resume getResume(Object index) {
+        return storage[(Integer) index];
     }
 
     /**
@@ -59,7 +59,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract int getKey(String uuid);
 
-    protected abstract void addResume(Resume resume, int index);
+    protected abstract void addResumeStorage(Resume resume, int index);
 
     protected abstract void deleteResumeStorage(int index);
 

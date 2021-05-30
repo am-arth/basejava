@@ -7,49 +7,49 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume resume) {
-        Object sKey = getKey(resume.getUuid());
-        if (!isExistKey(sKey)) {
+        Object searchKey = getKey(resume.getUuid());
+        if (!isExistKey(searchKey)) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
-            updateResume(resume, sKey);
+            updateResume(resume, searchKey);
         }
     }
 
     public void save(Resume resume) {
-        Object sKey = getKey(resume.getUuid());
-        if (isExistKey(sKey)) {
+        Object searchKey = getKey(resume.getUuid());
+        if (isExistKey(searchKey)) {
             throw new ExistStorageException(resume.getUuid());
         } else {
-            saveResume(resume, sKey);
+            saveResume(resume, searchKey);
         }
     }
 
     public Resume get(String uuid) {
-        Object sKey = getKey(uuid);
-        if (!isExistKey(sKey)) {
+        Object searchKey = getKey(uuid);
+        if (!isExistKey(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
-        return getResume(sKey);
+        return getResume(searchKey);
     }
 
     public void delete(String uuid) {
-        Object sKey = getKey(uuid);
-        if (!isExistKey(sKey)) {
+        Object searchKey = getKey(uuid);
+        if (!isExistKey(searchKey)) {
             throw new NotExistStorageException(uuid);
         } else {
-            deleteResume(sKey);
+            deleteResume(searchKey);
         }
     }
 
     protected abstract int getKey(String uuid);
 
-    protected abstract void updateResume(Resume resume, Object sKey);
+    protected abstract void updateResume(Resume resume, Object searchKey);
 
-    protected abstract boolean isExistKey(Object sKey);
+    protected abstract boolean isExistKey(Object searchKey);
 
-    protected abstract void saveResume(Resume resume, Object sKey);
+    protected abstract void saveResume(Resume resume, Object searchKey);
 
-    protected abstract void deleteResume(Object sKey);
+    protected abstract void deleteResume(Object searchKey);
 
-    protected abstract Resume getResume(Object sKey);
+    protected abstract Resume getResume(Object searchKey);
 }
