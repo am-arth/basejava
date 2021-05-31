@@ -18,7 +18,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected boolean isExistKey(Object index) {
+    protected boolean isExist(Object index) {
         return (Integer) index >= 0;
     }
 

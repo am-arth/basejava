@@ -46,6 +46,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[(Integer) index];
     }
 
+    @Override
+    protected boolean isExist(Object index) {
+        return (Integer) index >= 0;
+    }
+
     /**
      * @return array, contains only Resumes in storage (without null)
      */

@@ -13,11 +13,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected boolean isExistKey(Object sKey) {
-        return (Integer) sKey >= 0;
-    }
-
-    @Override
     protected void addResumeStorage(Resume resume, int index) {
         int insertIndex = -index - 1;
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);

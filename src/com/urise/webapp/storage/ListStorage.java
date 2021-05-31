@@ -35,6 +35,7 @@ public class ListStorage extends AbstractStorage {
     protected void updateResume(Resume resume, Object index) {
         List.set((Integer) index, resume);
     }
+
     @Override
     protected void deleteResume(Object index) {
         List.remove(((Integer) index).intValue());
@@ -51,7 +52,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExistKey(Object index) {
+    protected boolean isExist(Object index) {
         return (Integer) index > -1;
     }
 }
