@@ -42,7 +42,7 @@ public abstract class AbstractStorage implements Storage {
         return searchKey;
     }
 
-    protected abstract int getKey(String uuid);
+    protected abstract Object getKey(String uuid);
 
     protected abstract void updateResume(Resume resume, Object searchKey);
 

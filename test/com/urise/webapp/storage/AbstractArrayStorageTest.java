@@ -56,13 +56,13 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void saveOverflow() throws StorageException {
         try {
-            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
+            for (int i = 4; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
               storage.save(new Resume());
             }
         } catch (StorageException e) {
             fail("Переполнение массива произошло раньше времени.");
         }
-        storage.save(new Resume());
+        storage.save(new Resume(UUID4));
     }
 
     @Test

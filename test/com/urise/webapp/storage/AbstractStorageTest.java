@@ -63,7 +63,7 @@ public abstract class AbstractStorageTest {
         } catch (StorageException e) {
             fail("Переполнение массива произошло раньше времени.");
         }
-        storage.save(new Resume());
+        storage.save(new Resume(UUID4));
     }
 
     @Test
