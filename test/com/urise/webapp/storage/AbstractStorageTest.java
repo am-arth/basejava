@@ -2,7 +2,6 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,17 +11,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
 
-    private Storage storage;
+    Storage storage;
 
     private static final String UUID1 = "uuid1";
-    private static final Resume RESUME1 = new Resume(UUID1);
+    public static final Resume RESUME1;
     private static final String UUID2 = "uuid2";
-    private static final Resume RESUME2 = new Resume(UUID2);
+    public static final Resume RESUME2;
     private static final String UUID3 = "uuid3";
-    private static final Resume RESUME3 = new Resume(UUID3);
+    public static final Resume RESUME3;
     private static final String UUID4 = "uuid4";
-    private static final Resume RESUME4 = new Resume(UUID4);
+    private static final Resume RESUME4;
     private static final String UUID5 = "uuid5";
+
+    static {
+        RESUME1 = new Resume(UUID1);
+        RESUME2 = new Resume(UUID2);
+        RESUME3 = new Resume(UUID3);
+        RESUME4 = new Resume(UUID4);
+    }
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -52,18 +58,6 @@ public abstract class AbstractStorageTest {
     @Test
     public void saveExist() throws ExistStorageException {
         assertThrows(ExistStorageException.class, () -> storage.save(RESUME1));
-    }
-
-    @Test
-    public void saveOverflow() throws StorageException {
-        try {
-            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            fail("Переполнение массива произошло раньше времени.");
-        }
-        storage.save(new Resume(UUID4));
     }
 
     @Test
