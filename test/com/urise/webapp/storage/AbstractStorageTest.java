@@ -14,11 +14,11 @@ public abstract class AbstractStorageTest {
     Storage storage;
 
     private static final String UUID1 = "uuid1";
-    public static final Resume RESUME1;
+    protected static final Resume RESUME1;
     private static final String UUID2 = "uuid2";
-    public static final Resume RESUME2;
+    protected static final Resume RESUME2;
     private static final String UUID3 = "uuid3";
-    public static final Resume RESUME3;
+    protected static final Resume RESUME3;
     private static final String UUID4 = "uuid4";
     private static final Resume RESUME4;
     private static final String UUID5 = "uuid5";

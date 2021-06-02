@@ -13,7 +13,7 @@ public class MapStorageTest extends AbstractStorageTest{
     }
 
     @Test
-    public void getAll() {
+    public void getAll() throws Exception {
        Resume[] expectedResumes = {RESUME1, RESUME2, RESUME3};
        Resume[] actualResumes = storage.getAll();
        Arrays.sort(actualResumes);
