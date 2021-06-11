@@ -6,8 +6,10 @@ import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
 
@@ -24,10 +26,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID5 = "uuid5";
 
     static {
-        RESUME1 = new Resume(UUID1);
-        RESUME2 = new Resume(UUID2);
-        RESUME3 = new Resume(UUID3);
-        RESUME4 = new Resume(UUID4);
+        RESUME1 = new Resume(UUID1, "fullName1");
+        RESUME2 = new Resume(UUID2, "fullName2");
+        RESUME3 = new Resume(UUID3, "fullName3");
+        RESUME4 = new Resume(UUID4, "fullName4");
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -76,7 +78,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume resume = new Resume(UUID1);
+        Resume resume = new Resume(UUID1, "fullName");
         storage.update(resume);
         assertSame(resume, storage.get(UUID1));
     }
@@ -99,12 +101,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
-        Resume[] array = storage.getAll();
-        assertEquals(3, array.length);
-        assertEquals(RESUME1, array[0]);
-        assertEquals(RESUME2, array[1]);
-        assertEquals(RESUME3, array[2]);
+    public void getAllSorted() throws Exception {
+        List<Resume> List = storage.getAllSorted();
+        assertEquals(3, List.size());
+        assertEquals(List, Arrays.asList(RESUME1, RESUME2, RESUME3));
     }
 
     @Test

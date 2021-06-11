@@ -5,16 +5,16 @@ import java.util.*;
 
 public class MainCollections {
     private static final String UUID1 = "uuid1";
-    private static final Resume RESUME1 = new Resume(UUID1);
+    private static final Resume RESUME1 = new Resume(UUID1,"fullName1");
 
     private static final String UUID2 = "uuid2";
-    private static final Resume RESUME2 = new Resume(UUID2);
+    private static final Resume RESUME2 = new Resume(UUID2, "fullName2");
 
     private static final String UUID3 = "uuid3";
-    private static final Resume RESUME3 = new Resume(UUID3);
+    private static final Resume RESUME3 = new Resume(UUID3, "fullName3");
 
     private static final String UUID4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID4);
+    private static final Resume RESUME_4 = new Resume(UUID4, "fullName4");
 
     public static void main(String[] args) {
         Collection<Resume> collection = new ArrayList<>();
