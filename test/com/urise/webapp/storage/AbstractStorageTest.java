@@ -16,21 +16,14 @@ public abstract class AbstractStorageTest {
     Storage storage;
 
     private static final String UUID1 = "uuid1";
-    protected static final Resume RESUME1;
+    protected static final Resume RESUME1 = new Resume(UUID1, "fullName1");
     private static final String UUID2 = "uuid2";
-    protected static final Resume RESUME2;
+    protected static final Resume RESUME2 = new Resume(UUID2, "fullName2");
     private static final String UUID3 = "uuid3";
-    protected static final Resume RESUME3;
+    protected static final Resume RESUME3 = new Resume(UUID3, "fullName3");;
     private static final String UUID4 = "uuid4";
-    private static final Resume RESUME4;
+    private static final Resume RESUME4 = new Resume(UUID4, "fullName4");
     private static final String UUID5 = "uuid5";
-
-    static {
-        RESUME1 = new Resume(UUID1, "fullName1");
-        RESUME2 = new Resume(UUID2, "fullName2");
-        RESUME3 = new Resume(UUID3, "fullName3");
-        RESUME4 = new Resume(UUID4, "fullName4");
-    }
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -102,9 +95,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        List<Resume> List = storage.getAllSorted();
-        assertEquals(3, List.size());
-        assertEquals(List, Arrays.asList(RESUME1, RESUME2, RESUME3));
+        List<Resume> actualResumes = storage.getAllSorted();
+        assertEquals(3, actualResumes.size());
+        assertEquals(actualResumes, Arrays.asList(RESUME1, RESUME2, RESUME3));
     }
 
     @Test
