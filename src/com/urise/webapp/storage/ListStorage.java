@@ -5,27 +5,27 @@ import com.urise.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
-    private List<Resume> List = new ArrayList<>();
+    private List<Resume> list = new ArrayList<>();
 
     public void clear() {
-        List.clear();
+        list.clear();
     }
 
     public int size() {
-        return List.size();
+        return list.size();
     }
 
     @Override
     public List<Resume> getAllResume() {
-        return new ArrayList<>(List);
+        return new ArrayList<>(list);
     }
 
     @Override
     protected Integer getKey(String uuid) {
-        for (int i = 0; i < List.size(); i++) {
-            if (List.get(i).getUuid().equals(uuid)) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
@@ -33,27 +33,27 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Resume resume, Object index) {
-        List.set((Integer) index, resume);
+    protected void updateResume(Resume r, Integer searchKey) {
+        list.set(searchKey, r);
     }
 
     @Override
-    protected void deleteResume(Object index) {
-        List.remove(((Integer) index).intValue());
+    protected void deleteResume(Integer searchKey) {
+        list.remove(searchKey.intValue());
     }
 
     @Override
-    protected Resume getResume(Object index) {
-        return List.get((Integer) index);
+    protected Resume getResume(Integer searchKey) {
+        return list.get(searchKey);
     }
 
     @Override
-    protected void saveResume(Resume resume, Object index) {
-        List.add(resume);
+    protected void saveResume(Resume r, Integer searchKey) {
+        list.add(r);
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index > -1;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey != null;
     }
 }

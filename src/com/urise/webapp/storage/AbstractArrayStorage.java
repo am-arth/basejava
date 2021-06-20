@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer>  {
     protected static final int STORAGE_LIMIT = 10_000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -21,35 +21,35 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveResume(Resume resume, Object index) {
+    protected void saveResume(Resume resume, Integer index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Массив storage заполнен, сохранить невозможно!", resume.getUuid());
         } else {
-            addResumeStorage(resume, (Integer) index);
+            addResumeStorage(resume, index);
             size++;
         }
     }
 
     @Override
-    protected void deleteResume(Object index) {
-        deleteResumeStorage((Integer) index);
+    protected void deleteResume(Integer index) {
+        deleteResumeStorage(index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected void updateResume(Resume resume, Object index) {
-        storage[(Integer) index] = resume;
+    protected void updateResume(Resume resume, Integer index) {
+        storage[index] = resume;
     }
 
     @Override
-    public Resume getResume(Object index) {
-        return storage[(Integer) index];
+    public Resume getResume(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     @Override
@@ -64,5 +64,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void addResumeStorage(Resume resume, int index);
 
     protected abstract void deleteResumeStorage(int index);
+
+    protected abstract Integer getKey(String uuid);
 
 }
