@@ -6,25 +6,32 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SK> implements Storage {
 
-    public void update(Resume r) {
-        SK searchKey = getKeyExists(r.getUuid());
-        updateResume(r, searchKey);
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
+
+    public void update(Resume resume) {
+        LOG.info("Update " + resume);
+        SK searchKey = getKeyExists(resume.getUuid());
+        updateResume(resume, searchKey);
     }
 
-    public void save(Resume r) {
-        SK searchKey = getKeyNoExists(r.getUuid());
-        saveResume(r, searchKey);
+    public void save(Resume resume) {
+        LOG.info("Save " + resume);
+        SK searchKey = getKeyNoExists(resume.getUuid());
+        saveResume(resume, searchKey);
     }
 
     public Resume get(String uuid) {
+        LOG.info("Get " + uuid);
         SK searchKey = getKeyExists(uuid);
         return getResume(searchKey);
     }
 
     public void delete(String uuid) {
+        LOG.info("Delete " + uuid);
         SK searchKey = getKeyExists(uuid);
             deleteResume(searchKey);
     }
@@ -32,6 +39,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getKeyExists(String uuid) {
         SK searchKey = getKey(uuid);
         if (!isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " не найден");
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
@@ -40,6 +48,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getKeyNoExists(String uuid) {
         SK searchKey = getKey(uuid);
         if (isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " уже существует");
             throw new ExistStorageException(uuid);
         }
         return searchKey;
@@ -47,11 +56,11 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted");
         List<Resume> list = getAllResume();
         Collections.sort(list);
         return list;
     }
-
 
     protected abstract SK getKey(String uuid);
 
