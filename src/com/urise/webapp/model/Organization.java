@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Organization {
 
@@ -9,44 +10,36 @@ public class Organization {
     private final String name;
     private final String homePage;
     private final String specification;
+    private final String function;
 
-    public Organization(String name, LocalDate beginDate, LocalDate endDate, String homepage, String specification) {
+    public Organization(String name, String homepage, String function, LocalDate beginDate, LocalDate endDate, String specification) {
 
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.name = name;
         this.homePage = homepage;
         this.specification = specification;
+        this.function = function;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Organization that = (Organization) o;
-
-        if (!beginDate.equals(that.beginDate)) return false;
-        if (!endDate.equals(that.endDate)) return false;
-        if (!name.equals(that.name)) return false;
-        if (!homePage.equals(that.homePage)) return false;
-        return specification.equals(that.specification);
+        return beginDate.equals(that.beginDate) && endDate.equals(that.endDate) && name.equals(that.name) && homePage.equals(that.homePage) && specification.equals(that.specification) && function.equals(that.function);
     }
 
     @Override
     public int hashCode() {
-        int result = homePage.hashCode();
-        result = 31 * result + beginDate.hashCode();
-        result = 31 * result + endDate.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + (specification != null ? specification.hashCode() : 0);
-        return result;
+        return Objects.hash(beginDate, endDate, name, homePage, specification, function);
     }
 
     @Override
     public String toString() {
         return "Organization{" +
-                "homePage=" + homePage +
+                ", homePage=" + homePage +
+                ", function=" + function +
                 ", beginDate=" + beginDate +
                 ", endDate=" + endDate +
                 ", name='" + name + '\'' +

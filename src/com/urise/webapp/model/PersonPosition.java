@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 public class PersonPosition extends AbstractSection {
     private final String position;
 
@@ -20,15 +22,12 @@ public class PersonPosition extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         PersonPosition that = (PersonPosition) o;
-
         return position.equals(that.position);
-
     }
 
     @Override
     public int hashCode() {
-        return position.hashCode();
+        return Objects.hash(position);
     }
 }

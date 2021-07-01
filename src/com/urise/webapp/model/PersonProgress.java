@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PersonProgress extends AbstractSection {
     private final List<String> progress;
@@ -22,15 +23,12 @@ public class PersonProgress extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         PersonProgress that = (PersonProgress) o;
-
         return progress.equals(that.progress);
-
     }
 
     @Override
     public int hashCode() {
-        return progress.hashCode();
+        return Objects.hash(progress);
     }
 }
