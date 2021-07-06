@@ -23,12 +23,19 @@ public class ResumeTestData {
 
         resume.setSection(
                 SectionType.OBJECTIVE,
-                new PersonPosition("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям")
-
+                new PersonPosition(
+                        Arrays.asList(
+                                ("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям")
+                        )
+                )
         );
         resume.setSection(
                 SectionType.PERSONAL,
-                new PersonPosition("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.")
+                new PersonPosition(
+                        Arrays.asList(
+                                ("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.")
+                        )
+                )
         );
         resume.setSection(
                 SectionType.ACHIEVEMENT,
