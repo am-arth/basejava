@@ -5,6 +5,7 @@ import com.urise.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,11 +26,19 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-
+        for (File file : directory.listFiles()) {
+            if (file != null) {
+                file.deleteOnExit();
+            }
+        }
     }
 
     @Override
     public int size() {
+        String[] list = directory.list();
+        if (list != null) {
+            return list.length;
+        }
         return 0;
     }
 
@@ -40,7 +49,13 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void updateResume(Resume resume, File file) {
-
+        try {
+            if (file.canWrite()) {
+                doWrite(resume, file);
+            }
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
@@ -58,20 +73,36 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
     }
 
-    protected abstract void doWrite(Resume resume, File file) throws IOException;
-
     @Override
     protected Resume getResume(File file) {
-        return null;
+        try {
+            return doRead(file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
     protected void deleteResume(File file) {
-
+        file.deleteOnExit();
     }
 
     @Override
-    protected List<Resume> getAllResume() {
-        return null;
+    protected List<Resume> getAllResume()  {
+        List<Resume> list = new ArrayList<>();
+        for (File file : directory.listFiles()) {
+            try {
+                if (file != null) {
+                    list.add(doRead(file));
+                }
+            } catch (IOException e) {
+                throw new StorageException("IO error", file.getName(), e);
+            }
+        }
+        return list;
     }
+
+    protected abstract void doWrite(Resume resume, File file) throws IOException;
+
+    protected abstract Resume doRead(File file) throws IOException;
 }

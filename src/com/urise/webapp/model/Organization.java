@@ -1,26 +1,22 @@
 package com.urise.webapp.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 public class Organization {
-    private final Link homePage;
-    private final LocalDate beginDate;
-    private final LocalDate endDate;
-    private final String name;
-    private final String specification;
-    private final String function;
+    private Link homePage;
+    private List<Experience> experiences = new ArrayList<>();
 
     public Organization(String name, String url, String function, LocalDate beginDate, LocalDate endDate, String specification) {
-        Objects.requireNonNull(beginDate, "startDate must not be null");
-        Objects.requireNonNull(endDate, "endDate must not be null");
-        Objects.requireNonNull(name, "title must not be null");
-        this.beginDate = beginDate;
-        this.endDate = endDate;
-        this.name = name;
+        Objects.requireNonNull(name, "Name must not be null");
         this.homePage = new Link(name, url);
-        this.specification = specification;
-        this.function = function;
+        addPeriod(beginDate, endDate, function);
+    }
+
+    public void addPeriod(LocalDate beginDate, LocalDate endDate, String function) {
+        this.experiences.add(new Experience(beginDate, endDate, function));
     }
 
     @Override
@@ -28,23 +24,19 @@ public class Organization {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return beginDate.equals(that.beginDate) && endDate.equals(that.endDate) && name.equals(that.name) && homePage.equals(that.homePage) && specification.equals(that.specification) && function.equals(that.function);
+        return homePage.equals(that.homePage) && experiences.equals(that.experiences);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(beginDate, endDate, name, homePage, specification, function);
+        return Objects.hash(homePage, experiences);
     }
 
     @Override
     public String toString() {
         return "Organization{" +
-                ", homePage=" + homePage +
-                ", function=" + function +
-                ", beginDate=" + beginDate +
-                ", endDate=" + endDate +
-                ", name='" + name + '\'' +
-                ", specification='" + specification + '\'' +
+                "homePage=" + homePage +
+                ", periods=" + experiences +
                 '}';
     }
 }

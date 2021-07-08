@@ -7,12 +7,17 @@ import com.urise.webapp.storage.Storage;
 import java.time.LocalDate;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class ResumeTestData {
     private final static Storage storage = new MapResumeStorage();
 
     public static void main(String[] args) throws IOException {
-        Resume resume = new Resume("Григорий Кислин");
+        storage.save(generateResume(UUID.randomUUID().toString(), "Григорий Кислин"));
+        printAll();
+    }
+      public static Resume generateResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
 
         resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
         resume.setContact(ContactType.SKYPE, "grigory.kislin");
@@ -20,6 +25,7 @@ public class ResumeTestData {
         resume.setContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
         resume.setContact(ContactType.GITHUB, "https://github.com/gkislin");
         resume.setContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
+        resume.setContact(ContactType.HOMEPAGE, "http://gkislin.ru/");
 
         resume.setSection(
                 SectionType.OBJECTIVE,
@@ -139,6 +145,21 @@ public class ResumeTestData {
                         )
                 ))
         );
+
+        Organization organization = new Organization(
+                "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
+                "http://www.ifmo.ru/",
+                "Аспирантура (программист С, С++)",
+                LocalDate.of(1993, 9, 1),
+                LocalDate.of(1996, 7, 1),
+                ""
+                );
+        organization.addPeriod(
+                LocalDate.of(1987, 9, 1),
+                LocalDate.of(1993, 7, 1),
+                "Инженер (программист Fortran, C)"
+                );
+
         resume.setSection(
                 SectionType.EDUCATION,
                 new PersonOrganizations(Arrays.asList(
@@ -201,9 +222,8 @@ public class ResumeTestData {
                 ))
         );
 
-        storage.save(resume);
-        printAll();
-    }
+       return resume;
+}
 
     private static void printAll() {
         System.out.println("----------------------------");

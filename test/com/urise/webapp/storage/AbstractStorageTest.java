@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.urise.webapp.ResumeTestData.generateResume;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
@@ -16,14 +17,15 @@ public abstract class AbstractStorageTest {
     Storage storage;
 
     private static final String UUID1 = "uuid1";
-    protected static final Resume RESUME1 = new Resume(UUID1, "fullName1");
+    protected static final Resume RESUME1 = generateResume(UUID1, "fullName1");
     private static final String UUID2 = "uuid2";
-    protected static final Resume RESUME2 = new Resume(UUID2, "fullName2");
+    protected static final Resume RESUME2 = generateResume(UUID2, "fullName2");
     private static final String UUID3 = "uuid3";
-    protected static final Resume RESUME3 = new Resume(UUID3, "fullName3");;
+    protected static final Resume RESUME3 = generateResume(UUID3, "fullName3");;
     private static final String UUID4 = "uuid4";
-    private static final Resume RESUME4 = new Resume(UUID4, "fullName4");
+    private static final Resume RESUME4 = generateResume(UUID4, "fullName4");
     private static final String UUID5 = "uuid5";
+
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;

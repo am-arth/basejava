@@ -29,6 +29,10 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     public String getContact(ContactType contactType) {
         return contacts.get(contactType);
     }
@@ -40,6 +44,7 @@ public class Resume implements Comparable<Resume> {
     public void setContact(ContactType contactType, String contact) {
         this.contacts.put(contactType, contact);
     }
+
     public void setSection(SectionType sectionType, AbstractSection section) {
         this.sections.put(sectionType, section);
     }

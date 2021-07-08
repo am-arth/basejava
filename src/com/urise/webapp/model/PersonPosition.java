@@ -7,7 +7,7 @@ public class PersonPosition extends AbstractSection {
     private final List<String> position;
 
     public PersonPosition(List<String> position) {
-        Objects.requireNonNull(position, "items must not be null");
+        Objects.requireNonNull(position, "position must not be null");
         this.position = position;
     }
 
