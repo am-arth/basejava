@@ -16,7 +16,8 @@ public class ResumeTestData {
         storage.save(generateResume(UUID.randomUUID().toString(), "Григорий Кислин"));
         printAll();
     }
-      public static Resume generateResume(String uuid, String fullName) {
+
+    public static Resume generateResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
         resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
@@ -30,17 +31,13 @@ public class ResumeTestData {
         resume.setSection(
                 SectionType.OBJECTIVE,
                 new PersonPosition(
-                        Arrays.asList(
-                                ("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям")
-                        )
+                        "Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"
                 )
         );
         resume.setSection(
                 SectionType.PERSONAL,
                 new PersonPosition(
-                        Arrays.asList(
-                                ("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.")
-                        )
+                        "Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."
                 )
         );
         resume.setSection(
@@ -153,12 +150,13 @@ public class ResumeTestData {
                 LocalDate.of(1993, 9, 1),
                 LocalDate.of(1996, 7, 1),
                 ""
-                );
+        );
         organization.addPeriod(
                 LocalDate.of(1987, 9, 1),
                 LocalDate.of(1993, 7, 1),
-                "Инженер (программист Fortran, C)"
-                );
+                "Инженер (программист Fortran, C)",
+                ""
+        );
 
         resume.setSection(
                 SectionType.EDUCATION,
@@ -222,8 +220,8 @@ public class ResumeTestData {
                 ))
         );
 
-       return resume;
-}
+        return resume;
+    }
 
     private static void printAll() {
         System.out.println("----------------------------");

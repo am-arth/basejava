@@ -1,23 +1,24 @@
 package com.urise.webapp.model;
 
-import java.util.List;
 import java.util.Objects;
 
 public class PersonPosition extends AbstractSection {
-    private final List<String> position;
+    private final String position;
 
-    public PersonPosition(List<String> position) {
+    public PersonPosition(String position) {
         Objects.requireNonNull(position, "position must not be null");
         this.position = position;
     }
 
-    public List<String> getPosition() {
+    public String getPosition() {
         return position;
     }
 
     @Override
     public String toString() {
-        return position.toString();
+        return "PersonPosition{" +
+                "position='" + position + '\'' +
+                '}';
     }
 
     @Override

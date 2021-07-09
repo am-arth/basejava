@@ -12,11 +12,11 @@ public class Organization {
     public Organization(String name, String url, String function, LocalDate beginDate, LocalDate endDate, String specification) {
         Objects.requireNonNull(name, "Name must not be null");
         this.homePage = new Link(name, url);
-        addPeriod(beginDate, endDate, function);
+        addPeriod(beginDate, endDate, function, specification);
     }
 
-    public void addPeriod(LocalDate beginDate, LocalDate endDate, String function) {
-        this.experiences.add(new Experience(beginDate, endDate, function));
+    public void addPeriod(LocalDate beginDate, LocalDate endDate, String function, String specification) {
+        this.experiences.add(new Experience(beginDate, endDate, function, specification));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Organization {
     public String toString() {
         return "Organization{" +
                 "homePage=" + homePage +
-                ", periods=" + experiences +
+                ", experiences=" + experiences +
                 '}';
     }
 }
