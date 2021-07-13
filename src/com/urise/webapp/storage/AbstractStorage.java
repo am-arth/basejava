@@ -4,6 +4,7 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;

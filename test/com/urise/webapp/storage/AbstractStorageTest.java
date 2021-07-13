@@ -6,6 +6,7 @@ import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
 
-    Storage storage;
+    protected static final File STORAGE_DIR = new File("C:\\projects\\storage");
+    protected Storage storage;
 
     private static final String UUID1 = "uuid1";
     protected static final Resume RESUME1 = generateResume(UUID1, "fullName1");

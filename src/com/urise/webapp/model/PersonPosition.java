@@ -3,6 +3,7 @@ package com.urise.webapp.model;
 import java.util.Objects;
 
 public class PersonPosition extends AbstractSection {
+    private static final long serialVersionUID = 1L;
     private final String position;
 
     public PersonPosition(String position) {

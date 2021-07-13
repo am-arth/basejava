@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class PersonProgress extends AbstractSection {
+    private static final long serialVersionUID = 1L;
+
     private final List<String> progress;
 
     public PersonProgress(List<String> items) {
