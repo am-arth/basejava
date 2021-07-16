@@ -1,9 +1,11 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.time.LocalDate;
 
-public class Experience {
+public class Experience implements Serializable {
+    private static final long serialVersionUID = 1L;
     private LocalDate beginDate;
     private LocalDate endDate;
     private String function;

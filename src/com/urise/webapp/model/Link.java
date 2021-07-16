@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Link implements Serializable {
-    private final String name;
-    private final String url;
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private String url;
 
     public Link(String name, String url) {
         Objects.requireNonNull(name, "name must not be null");

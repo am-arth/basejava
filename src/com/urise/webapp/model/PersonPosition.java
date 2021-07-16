@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class PersonPosition extends AbstractSection {
     private static final long serialVersionUID = 1L;
-    private final String position;
+    private String position;
 
     public PersonPosition(String position) {
         Objects.requireNonNull(position, "position must not be null");

@@ -10,17 +10,16 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
+    private ObjectStreamSerializer streamSerializer;
 
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
-
-    protected abstract Resume doRead(InputStream is) throws IOException;
-
-    protected AbstractPathStorage(String dir) {
+    protected PathStorage(String dir, ObjectStreamSerializer streamSerializer) {
+        Objects.requireNonNull(dir, "directory must not be null");
+        this.streamSerializer = streamSerializer;
         directory = Paths.get(dir);
-        Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
@@ -31,32 +30,36 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         try {
             Files.list(directory).forEach(this::deleteResume);
         } catch (IOException e) {
-            throw new StorageException("File delete error", null);
+            throw new StorageException("Path read error", null, e);
         }
     }
 
     @Override
     public int size() {
-        return directory.getNameCount();
+        try {
+            return (int) Files.list(directory).count();
+        } catch (IOException e) {
+            throw new StorageException("Path read error", null, e);
+        }
     }
 
     @Override
     protected Path getKey(String uuid) {
-        return Paths.get(directory.toFile().getPath() + '/' + uuid);
+        return directory.resolve(uuid);
     }
 
     @Override
     protected void updateResume(Resume resume, Path path) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(path.toFile())));
+            streamSerializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("File update error", resume.getUuid(), e);
+            throw new StorageException("Path write error", resume.getUuid(), e);
         }
     }
 
     @Override
     protected boolean isExist(Path path) {
-        return Files.exists(path);
+        return Files.isRegularFile(path);
     }
 
     @Override
@@ -64,7 +67,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         try {
             Files.createFile(path);
         } catch (IOException e) {
-            throw new StorageException("Couldn't create file " + path.toFile().getAbsolutePath(), resume.getUuid(), e);
+            throw new StorageException("Couldn't create path", path.getFileName().toString(), e);
         }
         updateResume(resume, path);
     }
@@ -72,29 +75,31 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getResume(Path path) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(path.toFile())));
+            return streamSerializer.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("File read error", path.toFile().getName(), e);
+            throw new StorageException("Path read error", path.getFileName().toString(), e);
         }
     }
 
     @Override
     protected void deleteResume(Path path) {
         try {
-            Files.deleteIfExists(path);
+            Files.delete(path);
         } catch (IOException e) {
-            throw new StorageException("File delete error", path.toFile().getName(), e);
+            throw new StorageException("Path delete error", path.getFileName().toString(), e);
         }
     }
 
     @Override
     protected List<Resume> getAllResume() {
-        List<Resume> list;
+        return getFileList().map(this::getResume).collect(Collectors.toList());
+    }
+
+    private Stream<Path> getFileList() {
         try {
-            list = Files.list(directory).map(this::getResume).collect(Collectors.toList());
-        } catch (IOException e) {
+            return Files.list(directory);
+        } catch (Exception e) {
             throw new StorageException("Directory read error", directory.toFile().getPath(), e);
         }
-        return list;
     }
 }

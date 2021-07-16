@@ -31,20 +31,20 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        getFiles(dir);
+        getFiles(dir," ");
 
     }
 
-    public static void getFiles(File dir) {
+    public static void getFiles(File dir, String indent) {
         File[] files = dir.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println("File: " + file.getName());
+                    System.out.println(indent + "File: " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println("Directory: " + file.getName());
-                    getFiles(file);
+                    System.out.println(indent + "Directory: " + file.getName());
+                    getFiles(file, indent + "  ");
                 }
             }
         }
