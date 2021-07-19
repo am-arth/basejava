@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.serializer.ObjectStreamSerializer;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -16,7 +17,7 @@ public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
     private ObjectStreamSerializer streamSerializer;
 
-    protected PathStorage(String dir, ObjectStreamSerializer streamSerializer) {
+    public PathStorage(String dir, ObjectStreamSerializer streamSerializer) {
         Objects.requireNonNull(dir, "directory must not be null");
         this.streamSerializer = streamSerializer;
         directory = Paths.get(dir);
@@ -27,20 +28,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::deleteResume);
-        } catch (IOException e) {
-            throw new StorageException("Path read error", null, e);
-        }
+        getFileList().forEach(this::deleteResume);
     }
 
     @Override
     public int size() {
-        try {
-            return (int) Files.list(directory).count();
-        } catch (IOException e) {
-            throw new StorageException("Path read error", null, e);
-        }
+        return (int) getFileList().count();
     }
 
     @Override
@@ -86,13 +79,17 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             Files.delete(path);
         } catch (IOException e) {
-            throw new StorageException("Path delete error", path.getFileName().toString(), e);
+            throw new StorageException("Path delete error", getFileName(path), e);
         }
     }
 
     @Override
     protected List<Resume> getAllResume() {
         return getFileList().map(this::getResume).collect(Collectors.toList());
+    }
+
+    private String getFileName(Path path) {
+        return path.getFileName().toString();
     }
 
     private Stream<Path> getFileList() {

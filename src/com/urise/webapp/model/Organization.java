@@ -1,24 +1,23 @@
 package com.urise.webapp.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
     private Link homePage;
     private List<Experience> experiences = new ArrayList<>();
 
-    public Organization(String name, String url, String function, LocalDate beginDate, LocalDate endDate, String specification) {
-        Objects.requireNonNull(name, "Name must not be null");
-        this.homePage = new Link(name, url);
-        addPeriod(beginDate, endDate, function, specification);
+    public Organization(String name, String url,  Experience... experiences) {
+        this(new Link(name, url), Arrays.asList(experiences));
     }
 
-    public void addPeriod(LocalDate beginDate, LocalDate endDate, String function, String specification) {
-        this.experiences.add(new Experience(beginDate, endDate, function, specification));
+    public Organization(Link homePage, List<Experience> experiences) {
+        this.homePage = homePage;
+        this.experiences = experiences;
     }
 
     @Override

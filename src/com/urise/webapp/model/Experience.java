@@ -11,7 +11,7 @@ public class Experience implements Serializable {
     private String function;
     private String specification;
 
-    public Experience(LocalDate beginDate, LocalDate endDate, String function, String specification) {
+    public Experience(String function, LocalDate beginDate, LocalDate endDate, String specification) {
         Objects.requireNonNull(beginDate, "beginDate must not be null");
         Objects.requireNonNull(endDate, "endDate must not be null");
         Objects.requireNonNull(function, "function must not be null");
@@ -19,6 +19,22 @@ public class Experience implements Serializable {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.specification = specification;
+    }
+
+    public LocalDate getBeginDate() {
+        return beginDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public String getFunction() {
+        return function;
+    }
+
+    public String getSpecification() {
+        return specification;
     }
 
     @Override

@@ -4,15 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class PersonOrganizations extends AbstractSection {
+public class OrganizationSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
     private final List<Organization> organizations;
 
-    public PersonOrganizations(Organization... organizations) {
+    public OrganizationSection(Organization... organizations) {
         this(Arrays.asList(organizations));
     }
 
-    public PersonOrganizations(List<Organization> organizations) {
+    public OrganizationSection(List<Organization> organizations) {
         Objects.requireNonNull(organizations, "organizations must not be null");
         this.organizations = organizations;
     }
@@ -22,11 +22,18 @@ public class PersonOrganizations extends AbstractSection {
     }
 
     @Override
+    public String toString() {
+        return "OrganizationSection{" +
+                "organizations=" + organizations +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PersonOrganizations that = (PersonOrganizations) o;
-        return organizations.equals(that.organizations);
+        OrganizationSection that = (OrganizationSection) o;
+        return Objects.equals(organizations, that.organizations);
     }
 
     @Override
@@ -34,8 +41,4 @@ public class PersonOrganizations extends AbstractSection {
         return Objects.hash(organizations);
     }
 
-    @Override
-    public String toString() {
-        return organizations.toString();
-    }
 }
