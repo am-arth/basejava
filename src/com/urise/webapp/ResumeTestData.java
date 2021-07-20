@@ -79,7 +79,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Java Online Projects",
                                 "http://javaops.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Автор проекта.",
                                         LocalDate.of(2013, 10, 1),
                                         LocalDate.now(),
@@ -89,7 +89,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Wrike",
                                 "https://www.wrike.com/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Старший разработчик (backend)",
                                         LocalDate.of(2014, 10, 1),
                                         LocalDate.of(2016, 1, 1),
@@ -99,7 +99,7 @@ public class ResumeTestData {
                         new Organization(
                                 "RIT Center",
                                 "",
-                                new Experience(
+                                new Organization.Experience(
                                         "Java архитектор",
                                         LocalDate.of(2012, 4, 1),
                                         LocalDate.of(2014, 10, 1),
@@ -109,7 +109,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Luxoft (Deutsche Bank)",
                                 "http://www.luxoft.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Ведущий программист",
                                         LocalDate.of(2010, 12, 1),
                                         LocalDate.of(2012, 4, 1),
@@ -119,7 +119,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Yota",
                                 "https://www.yota.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Ведущий специалист",
                                         LocalDate.of(2008, 6, 1),
                                         LocalDate.of(2010, 12, 1),
@@ -129,7 +129,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Enkata",
                                 "http://enkata.com/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Разработчик ПО",
                                         LocalDate.of(2007, 3, 1),
                                         LocalDate.of(2008, 6, 1),
@@ -139,7 +139,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Siemens AG",
                                 "https://www.siemens.com/ru/ru/home.html",
-                                new Experience(
+                                new Organization.Experience(
                                         "Разработчик ПО",
                                         LocalDate.of(2005, 1, 1),
                                         LocalDate.of(2007, 2, 1),
@@ -149,7 +149,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Alcatel",
                                 "http://www.alcatel.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Инженер по аппаратному и программному тестированию",
                                         LocalDate.of(1997, 9, 1),
                                         LocalDate.of(2005, 1, 1),
@@ -165,7 +165,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Coursera",
                                 "https://www.coursera.org/course/progfun",
-                                new Experience(
+                                new Organization.Experience(
                                         "\"Functional Programming Principles in Scala\" by Martin Odersky",
                                         LocalDate.of(2013, 3, 1),
                                         LocalDate.of(2013, 5, 1),
@@ -175,7 +175,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Luxoft",
                                 "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
-                                new Experience(
+                                new Organization.Experience(
                                         "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
                                         LocalDate.of(2011, 3, 1),
                                         LocalDate.of(2011, 4, 1),
@@ -185,7 +185,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Siemens AG",
                                 "http://www.siemens.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "3 месяца обучения мобильным IN сетям (Берлин)",
                                         LocalDate.of(2005, 1, 1),
                                         LocalDate.of(2005, 4, 1),
@@ -195,7 +195,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Alcatel",
                                 "http://www.alcatel.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "6 месяцев обучения цифровым телефонным сетям (Москва)",
                                         LocalDate.of(1997, 9, 1),
                                         LocalDate.of(1998, 3, 1),
@@ -205,7 +205,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                                 "http://www.ifmo.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Аспирантура (программист С, С++)",
                                         LocalDate.of(1993, 9, 1),
                                         LocalDate.of(1996, 7, 1),
@@ -215,7 +215,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                                 "http://www.ifmo.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Инженер (программист Fortran, C)",
                                         LocalDate.of(1987, 9, 1),
                                         LocalDate.of(1993, 7, 1),
@@ -225,7 +225,7 @@ public class ResumeTestData {
                         new Organization(
                                 "Заочная физико-техническая школа при МФТИ",
                                 "http://www.school.mipt.ru/",
-                                new Experience(
+                                new Organization.Experience(
                                         "Закончил с отличием",
                                         LocalDate.of(1984, 9, 1),
                                         LocalDate.of(1987, 6, 1),
