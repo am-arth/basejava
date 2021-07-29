@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public interface Serializer {
-    void doWrite(Resume r, OutputStream os) throws IOException;
+public interface StreamSerializer {
+    void doWrite(Resume resume, OutputStream os) throws IOException;
 
     Resume doRead(InputStream is) throws IOException;
 }

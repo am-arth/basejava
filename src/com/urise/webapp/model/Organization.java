@@ -1,5 +1,10 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,11 +12,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
     private Link homePage;
     private List<Experience> experiences = new ArrayList<>();
+
+    public Organization() {
+    }
 
     public Organization(String name, String url,  Experience... experiences) {
         this(new Link(name, url), Arrays.asList(experiences));
@@ -51,11 +59,17 @@ public class Organization implements Serializable {
                 '}';
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Experience implements Serializable{
-        private final LocalDate beginDate;
-        private final LocalDate endDate;
-        private final String function;
-        private final String specification;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate beginDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
+        private String function;
+        private String specification;
+
+        public Experience() {
+        }
 
         public Experience(String function, LocalDate beginDate, LocalDate endDate, String specification) {
             Objects.requireNonNull(beginDate, "beginDate must not be null");
@@ -64,7 +78,7 @@ public class Organization implements Serializable {
             this.beginDate = beginDate;
             this.endDate = endDate;
             this.function = function;
-            this.specification = specification;
+            this.specification = specification == null ? "" : specification;
         }
 
         public LocalDate getBeginDate() {

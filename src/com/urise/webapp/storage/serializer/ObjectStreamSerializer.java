@@ -5,7 +5,7 @@ import com.urise.webapp.exception.StorageException;
 
 import java.io.*;
 
-public class ObjectStreamSerializer implements Serializer {
+public class ObjectStreamSerializer implements StreamSerializer {
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {

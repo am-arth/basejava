@@ -6,6 +6,9 @@ public class TextSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
     private String content;
 
+    public TextSection() {
+    }
+
     public TextSection(String content) {
         Objects.requireNonNull(content, "position must not be null");
         this.content = content;
