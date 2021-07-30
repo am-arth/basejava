@@ -17,6 +17,10 @@ public class DataStreamSerializer implements StreamSerializer {
             dos.writeUTF(r.getFullName());
             Map<ContactType, String> contacts = r.getContacts();
             dos.writeInt(contacts.size());
+            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+                dos.writeUTF(entry.getKey().name());
+                dos.writeUTF(entry.getValue());
+            }
             Map<SectionType, AbstractSection> sections = r.getSections();
             dos.writeInt(sections.size());
             for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
