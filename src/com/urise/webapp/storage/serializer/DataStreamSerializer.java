@@ -50,36 +50,28 @@ public class DataStreamSerializer implements StreamSerializer {
                 break;
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                List<String> list = ((ListSection) section).getProgress();
-                dos.writeInt(list.size());
-                for (String item : list) {
-                    dos.writeUTF(item);
-                }
+                writeWithException(dos, ((ListSection) section).getProgress(), dos::writeUTF);
                 break;
             case EDUCATION:
             case EXPERIENCE:
-                List<Organization> organizations = ((OrganizationSection) section).getOrganizations();
-                dos.writeInt(organizations.size());
-                for (Organization organization : organizations) {
+                writeWithException(dos, ((OrganizationSection) section).getOrganizations(), organization -> {
                     Link link = organization.getLink();
                     dos.writeUTF(link.getName());
                     dos.writeUTF(link.getUrl());
-                    List<Organization.Experience> experiences = organization.getExperience();
-                    dos.writeInt(experiences.size());
-                    for (Organization.Experience experience : experiences) {
+                    writeWithException(dos, organization.getExperience(), experience -> {
                         dos.writeUTF(experience.getFunction());
                         writeDate(dos, experience.getBeginDate());
                         writeDate(dos, experience.getEndDate());
                         dos.writeUTF(experience.getSpecification());
-                    }
-                }
+                    });
+                });
                 break;
+
         }
     }
 
     private AbstractSection readSection(DataInputStream dis, SectionType sectionType) throws IOException {
         AbstractSection section = null;
-        int size;
         switch (sectionType) {
             case PERSONAL:
             case OBJECTIVE:
@@ -87,33 +79,26 @@ public class DataStreamSerializer implements StreamSerializer {
                 break;
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                size = dis.readInt();
-                List<String> list = new ArrayList<>();
-                for (int i = 0; i < size; i++) {
-                    list.add(dis.readUTF());
-                }
-                section = new ListSection(list);
+                List<String> content = new ArrayList<>();
+                readWithException(dis, () -> content.add(dis.readUTF()));
+                section = new ListSection(content);
                 break;
             case EDUCATION:
             case EXPERIENCE:
-                size = dis.readInt();
                 List<Organization> organizations = new ArrayList<>();
-                for (int i = 0; i < size; i++) {
+                readWithException(dis, () -> {
                     Link link = new Link(dis.readUTF(), dis.readUTF());
                     List<Organization.Experience> experiences = new ArrayList<>();
-                    int count = dis.readInt();
-                    for (int j = 0; j < count; j++) {
-                        experiences.add(new Organization.Experience(
-                                dis.readUTF(),
-                                readDate(dis),
-                                readDate(dis),
-                                dis.readUTF()
-                        ));
-                    }
+                    readWithException(dis, () -> experiences.add(new Organization.Experience(
+                            dis.readUTF(),
+                            readDate(dis),
+                            readDate(dis),
+                            dis.readUTF())));
                     organizations.add(new Organization(link, experiences));
-                }
+                });
                 section = new OrganizationSection(organizations);
                 break;
+            default:
         }
         return section;
     }
