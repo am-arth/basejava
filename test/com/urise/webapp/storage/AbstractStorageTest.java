@@ -9,9 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
-import static com.urise.webapp.ResumeTestData.generateResume;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -21,16 +22,23 @@ public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected Storage storage;
 
-    private static final String UUID1 = "uuid1";
-    private static final Resume RESUME1 = generateResume(UUID1, "fullName1");
-    private static final String UUID2 = "uuid2";
-    private static final Resume RESUME2 = generateResume(UUID2, "fullName2");
-    private static final String UUID3 = "uuid3";
-    private static final Resume RESUME3 = generateResume(UUID3, "fullName3");;
-    private static final String UUID4 = "uuid4";
-    private static final Resume RESUME4 = generateResume(UUID4, "fullName4");
-    private static final String UUID5 = "uuid5";
+    private static final String UUID1 = UUID.randomUUID().toString();
+    private static final String UUID2 = UUID.randomUUID().toString();
+    private static final String UUID3 = UUID.randomUUID().toString();
+    private static final String UUID4 = UUID.randomUUID().toString();
+    private static final String UUID5 = UUID.randomUUID().toString();
 
+    private static final Resume RESUME1;
+    private static final Resume RESUME2;
+    private static final Resume RESUME3;
+    private static final Resume RESUME4;
+
+    static {
+        RESUME1 = new Resume(UUID1, "Name1");
+        RESUME2 = new Resume(UUID2, "Name2");
+        RESUME3 = new Resume(UUID3, "Name3");
+        RESUME4 = new Resume(UUID4, "Name4");
+    }
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -102,9 +110,11 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        List<Resume> actualResumes = storage.getAllSorted();
-        assertEquals(3, actualResumes.size());
-        assertEquals(actualResumes, Arrays.asList(RESUME1, RESUME2, RESUME3));
+        List<Resume> list = storage.getAllSorted();
+        assertEquals(3, list.size());
+        List<Resume> sortedResumes = Arrays.asList(RESUME1, RESUME2, RESUME3);
+        Collections.sort(sortedResumes);
+        assertEquals(list, sortedResumes);
     }
 
     @Test
