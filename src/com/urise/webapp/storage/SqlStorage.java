@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.sql.SqlHelper;
@@ -12,8 +13,17 @@ import java.util.List;
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
 
-    public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
-        sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+    public SqlStorage() {
+        this(Config.get().getDbUrl(), Config.get().getDbUser(), Config.get().getDbPassword());
+    }
+
+    public SqlStorage(String url, String user, String password) {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+        sqlHelper = new SqlHelper(() -> DriverManager.getConnection(url, user, password));
     }
 
     @Override
@@ -35,11 +45,12 @@ public class SqlStorage implements Storage {
 
     @Override
     public void update(Resume r) {
+        String uuid = r.getUuid();
         sqlHelper.execute("UPDATE resume SET full_name = ? WHERE uuid = ?", ps -> {
             ps.setString(1, r.getFullName());
-            ps.setString(2, r.getUuid());
+            ps.setString(2, uuid);
             if (ps.executeUpdate() == 0) {
-                throw new NotExistStorageException(r.getUuid());
+                throw new NotExistStorageException(uuid);
             }
             return null;
         });
