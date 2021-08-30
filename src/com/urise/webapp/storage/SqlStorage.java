@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Config;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.sql.SqlHelper;
@@ -12,10 +11,6 @@ import java.util.List;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
-
-    public SqlStorage() {
-        this(Config.get().getDbUrl(), Config.get().getDbUser(), Config.get().getDbPassword());
-    }
 
     public SqlStorage(String url, String user, String password) {
         try {
