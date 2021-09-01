@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.model.ContactType;
 import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
 
@@ -61,8 +61,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void save() throws Exception {
         storage.save(RESUME4);
-        assertEquals(4, storage.size());
-        assertEquals(RESUME4, storage.get(UUID4));
+        assertSize(4);
+        assertGet(RESUME4);
     }
 
     @Test
@@ -86,9 +86,12 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume resume = new Resume(UUID1, "fullName");
-        storage.update(resume);
-        assertEquals(resume, storage.get(UUID1));
+        Resume newResume = new Resume(UUID1, "New Name");
+        RESUME1.addContact(ContactType.MAIL, "mail1@google.com");
+        RESUME1.addContact(ContactType.SKYPE, "NewSkype");
+        RESUME1.addContact(ContactType.MOBILE, "+7 921 222-22-22");
+        storage.update(newResume);
+        assertTrue(newResume.equals(storage.get(UUID1)));
     }
 
     @Test
@@ -103,9 +106,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertEquals(RESUME1, storage.get(UUID1));
-        assertEquals(RESUME2, storage.get(UUID2));
-        assertEquals(RESUME3, storage.get(UUID3));
+        assertGet(RESUME1);
+        assertGet(RESUME2);
+        assertGet(RESUME3);
     }
 
     @Test
@@ -114,11 +117,19 @@ public abstract class AbstractStorageTest {
         assertEquals(3, list.size());
         List<Resume> sortedResumes = Arrays.asList(RESUME1, RESUME2, RESUME3);
         Collections.sort(sortedResumes);
-        assertEquals(list, sortedResumes);
+        assertEquals(sortedResumes, list);
     }
 
     @Test
     public void size() throws Exception {
         assertEquals(3, storage.size());
+    }
+
+    private void assertGet(Resume r) {
+        assertEquals(r, storage.get(r.getUuid()));
+    }
+
+    private void assertSize(int size) {
+        assertEquals(size, storage.size());
     }
 }
