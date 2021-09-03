@@ -1,12 +1,12 @@
 package com.urise.webapp;
 
-import com.urise.webapp.model.*;
+import com.urise.webapp.model.ContactType;
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.SectionType;
 import com.urise.webapp.storage.MapResumeStorage;
 import com.urise.webapp.storage.Storage;
 
-import java.time.LocalDate;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.UUID;
 
 public class ResumeTestData {
@@ -19,7 +19,6 @@ public class ResumeTestData {
 
     public static Resume generateResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-
         resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
         resume.setContact(ContactType.SKYPE, "grigory.kislin");
         resume.setContact(ContactType.MAIL, "gkislin@yandex.ru");
@@ -27,7 +26,7 @@ public class ResumeTestData {
         resume.setContact(ContactType.GITHUB, "https://github.com/gkislin");
         resume.setContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
         resume.setContact(ContactType.HOMEPAGE, "http://gkislin.ru/");
-
+/*
         resume.setSection(
                 SectionType.OBJECTIVE,
                 new TextSection(
@@ -234,7 +233,7 @@ public class ResumeTestData {
                         )
                 )
         );
-
+*/
         return resume;
 
     }

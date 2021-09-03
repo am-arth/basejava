@@ -3,7 +3,6 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.ContactType;
 import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.urise.webapp.ResumeTestData.generateResume;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
 
@@ -34,10 +35,11 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME4;
 
     static {
+
         RESUME1 = new Resume(UUID1, "Name1");
-        RESUME2 = new Resume(UUID2, "Name2");
-        RESUME3 = new Resume(UUID3, "Name3");
-        RESUME4 = new Resume(UUID4, "Name4");
+        RESUME2 = generateResume(UUID2, "Name2");
+        RESUME3 = generateResume(UUID3, "Name3");
+        RESUME4 = generateResume(UUID4, "Name4");
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -86,12 +88,8 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume(UUID1, "New Name");
-        RESUME1.addContact(ContactType.MAIL, "mail1@google.com");
-        RESUME1.addContact(ContactType.SKYPE, "NewSkype");
-        RESUME1.addContact(ContactType.MOBILE, "+7 921 222-22-22");
-        storage.update(newResume);
-        assertTrue(newResume.equals(storage.get(UUID1)));
+        storage.update(RESUME2);
+        assertEquals(RESUME2, storage.get(UUID2));
     }
 
     @Test
